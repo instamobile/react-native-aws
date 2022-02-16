@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3479f631e",
+  "policyUUID": "479f631e",
+  "bucketName": "awsloginapp630cc3e7c47c483ba228c01122e8ea8c",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

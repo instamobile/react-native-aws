@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "awsloginapp",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authawsloginapp315adff8",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

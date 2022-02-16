@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "awsloginapp",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/sholaEmmanuel/Documents/work/instamobile/expo/AWSLoginApp/amplify/backend/api/awsloginapp/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authawsloginapp315adff8"
+    }
+  }
+}
