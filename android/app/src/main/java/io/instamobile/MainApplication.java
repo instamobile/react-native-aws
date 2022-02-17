@@ -26,8 +26,6 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
 import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
-import io.instamobile.launchapplication.LaunchApplicationPackage;;
-import io.instamobile.videoplayer.VideoPlayerPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -55,9 +53,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
 
       // Packages that cannot be autolinked yet can be added manually here, for example:
       // packages.add(new MyReactNativePackage());
-        packages.add(new VideoPlayerPackage());
-        packages.add(new LaunchApplicationPackage());
-
       return packages;
     }
 

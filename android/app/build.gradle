@@ -138,7 +138,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "io.instamobile.rn.android"
+        applicationId "io.instamobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -262,4 +262,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 apply from: new File(["node", "--print", "require.resolve('@react-native-community/cli-platform-android/package.json')"].execute().text.trim(), "../native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-apply plugin: 'com.google.gms.google-services'

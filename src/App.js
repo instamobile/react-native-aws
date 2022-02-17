@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { LogBox } from 'react-native'
 import { Provider } from 'react-redux'
-import Amplify from 'aws-amplify'
-import config from './aws-exports'
 import { extendTheme, DNProvider, TranslationProvider } from 'dopenative'
 import configureStore from './redux/store'
 import AppContent from './AppContent'
@@ -12,7 +10,7 @@ import { AuthProvider } from './Core/onboarding/hooks/useAuth'
 import { authManager } from './Core/onboarding/api'
 import InstamobileTheme from './theme'
 
-Amplify.configure(config)
+
 
 const store = configureStore()
 
