@@ -40,13 +40,18 @@ git clone https://github.com/instamobile/react-native-aws.git
 cd react-native-aws
 ```
 
-2. Initialise the AWS Amplify project.
+
+2. Configure AWS Amplify cli.
+
+you will need to configure your Amplify command line interface. click [here](https://docs.amplify.aws/start/getting-started/installation/q/integration/react-native/) to find out exactly how to do that
+
+3. Initialise the AWS Amplify project.
 
 ```
 amplify init
 ```
 
-3. Time to deploy your project to AWS.
+4. Time to deploy your project to AWS.
 
 ```
 amplify push
