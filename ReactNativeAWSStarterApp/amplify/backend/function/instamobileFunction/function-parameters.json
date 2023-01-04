@@ -1,0 +1,30 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "api": {
+      "instamobile": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  },
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "cognitoClientId",
+      "environmentVariableName": "COGNITO_CLIENT_ID"
+    },
+    {
+      "cloudFormationParameterName": "cognitoUserPoolId",
+      "environmentVariableName": "COGNITO_USER_POOL_ID"
+    },
+    {
+      "cloudFormationParameterName": "adminUserUsername",
+      "environmentVariableName": "ADMIN_USER_USERNAME"
+    },
+    {
+      "cloudFormationParameterName": "adminUserPassword",
+      "environmentVariableName": "ADMIN_USER_PASSWORD"
+    }
+  ]
+}

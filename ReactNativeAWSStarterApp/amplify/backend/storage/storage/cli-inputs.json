@@ -1,0 +1,16 @@
+{
+  "resourceName": "storage",
+  "policyUUID": "05af9dc1",
+  "bucketName": "instamobile086a5efce13c48019c26e74a83d64cb3",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

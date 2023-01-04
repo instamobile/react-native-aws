@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "instamobile",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authinstamobile0f4708fd",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

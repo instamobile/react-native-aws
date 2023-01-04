@@ -1,0 +1,68 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+#Social Graph model
+
+type Friendship
+  @model(timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: String! @primaryKey
+  sourceUserID: ID!
+    @index(
+      name: "friendshipsbySourceUser"
+      queryField: "friendshipsBySourceUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  destUserID: ID!
+    @index(
+      name: "friendshipsByDestUser"
+      queryField: "friendshipsByDestUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  type: String!
+  user: User @belongsTo(fields: ["destUserID"])
+  createdAt: Int
+  updatedAt: Int
+}
+
+type MutualFriendship
+  @model(subscriptions: null, timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: String! @primaryKey
+  sourceUserID: ID!
+    @index(
+      name: "mutualsBySourceUser"
+      queryField: "mutualsBySourceUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  destUserID: ID!
+    @index(name: "mutualsByDestUser", queryField: "mutualsByDestUser")
+  type: String!
+  user: User @belongsTo(fields: ["destUserID"])
+  createdAt: Int
+  updatedAt: Int
+}
+
+type UnmutualFriendship
+  @model(subscriptions: null, timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: String! @primaryKey
+  sourceUserID: ID!
+    @index(
+      name: "UnmutualsBySourceUser"
+      queryField: "unmutualsBySourceUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  destUserID: ID!
+    @index(name: "unmutualsByDestUser", queryField: "unmutualsByDestUser")
+  type: String!
+  user: User @belongsTo(fields: ["destUserID"])
+  createdAt: Int
+  updatedAt: Int
+}

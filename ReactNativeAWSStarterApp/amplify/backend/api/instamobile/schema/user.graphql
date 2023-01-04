@@ -1,0 +1,90 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+type Location {
+  longitude: Float!
+  latitude: Float!
+}
+
+type User
+  @model(
+    queries: { list: null, get: "getUser" }
+    subscriptions: null
+    timestamps: null
+  )
+  @searchable
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: ID!
+  username: String
+  email: String
+  firstName: String
+  lastName: String
+  fullName: String
+  phone: Int
+  profilePictureKey: String
+  profilePictureURL: String
+  location: Location
+  signUpLocation: Location
+  lastOnlineTimestamp: Int
+  chatChannelFeed: [ChannelFeed]
+    @hasMany(indexName: "channelFeedBySourceUser", fields: ["id"])
+  userReports: [UserReport]
+    @hasMany(indexName: "userReportsBySourceUser", fields: ["id"])
+  inboundFriendshipCount: Int
+  outboundFriendshipCount: Int
+  mutualFriendshipCount: Int
+  friendships: [Friendship]
+    @hasMany(indexName: "friendshipsbySourceUser", fields: ["id"])
+  mutualFriendships: [MutualFriendship]
+    @hasMany(indexName: "mutualsBySourceUser", fields: ["id"])
+  unmutualFriendships: [UnmutualFriendship]
+    @hasMany(indexName: "UnmutualsBySourceUser", fields: ["id"])
+  posts: [Post] @hasMany(indexName: "postsByUser", fields: ["id"])
+  comments: [Comment] @hasMany(indexName: "commentsByUser", fields: ["id"])
+  stories: [Story] @hasMany(indexName: "storiesByUser", fields: ["id"])
+  postFeed: [PostFeed] @hasMany(indexName: "postFeedByAuthor", fields: ["id"])
+  storyFeed: [StoryFeed]
+    @hasMany(indexName: "storyFeedByAuthor", fields: ["id"])
+  createdAt: Int
+  updatedAt: Int
+}
+
+type ReportedUser {
+  id: ID!
+  lastName: String
+  firstName: String
+  fullName: String
+  email: String
+  profilePictureURL: String
+  profilePictureKey: String
+}
+
+type UserReport
+  @model(
+    queries: { list: null, get: null }
+    subscriptions: null
+    timestamps: null
+  )
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: String! @primaryKey
+  dest: ID!
+    @index(
+      name: "userReportsByDestUser"
+      queryField: "userReportsByDestUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  source: ID!
+    @index(
+      name: "userReportsBySourceUser"
+      queryField: "userReportsBySourceUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  user: ReportedUser
+  type: String
+  createdAt: Int
+  updatedAt: Int
+}

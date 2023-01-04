@@ -1,0 +1,16 @@
+projects:
+  instamobile:
+    schemaPath: src/aws/graphql/schema.json
+    includes:
+      - src/
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/aws/graphql
+        maxDepth: 4
+extensions:
+  amplify:
+    version: 3

@@ -1,0 +1,139 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+#Chat model
+
+type ChannelFeed
+  @model(subscriptions: null, timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: String! @primaryKey
+  creatorID: String
+  channelID: String!
+    @index(
+      name: "byChannelID"
+      queryField: "channelFeedByChannelID"
+      sortKeyFields: ["updatedAt"]
+    )
+  title: String
+  content: String
+  markedAsRead: Boolean
+  participants: [MessageUser]
+  admins: [ID]
+  userID: ID!
+    @index(
+      name: "channelFeedBySourceUser"
+      queryField: "channelFeedByUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  createdAt: Int
+  updatedAt: Int
+}
+
+type ProfilePictureURLs {
+  participantId: String
+  profilePictureURL: String
+  profilePictureKey: String
+}
+
+type TypingUsers {
+  userID: String
+  isTyping: Boolean
+}
+
+type Channel
+  @model(subscriptions: null, timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: String! @primaryKey
+  creatorID: String
+  participants: [MessageUser]
+  name: String
+  admins: [ID]
+  channelID: String
+  lastMessage: String
+  lastMessageDate: Int
+  lastMessageSenderId: ID
+  lastThreadMessageId: ID
+  readUserIDs: [ID]
+  messages: [Message] @hasMany(indexName: "byMessageChannelID", fields: ["id"])
+  channelFeed: [ChannelFeed] @hasMany(indexName: "byChannelID", fields: ["id"])
+  typingUsers: [TypingUsers]
+  createdAt: Int
+  updatedAt: Int
+}
+
+type MessageUser {
+  id: ID!
+  fullName: String
+  username: String
+  firstName: String
+  lastName: String
+  profilePictureKey: String
+}
+
+type InReplyToItem {
+  senderFirstName: String
+  senderLastName: String
+  content: String
+}
+
+type Reaction {
+  like: [ID]
+  love: [ID]
+  laugh: [ID]
+  angry: [ID]
+  suprised: [ID]
+  cry: [ID]
+  sad: [ID]
+}
+
+type Mention {
+  start: Int
+  end: Int
+  username: String
+  id: String
+  type: String
+}
+
+type MessageURL {
+  mime: String
+  url: String
+  urlKey: String
+  thumbnailURL: String
+  thumbnailKey: String
+  fileID: String
+}
+
+type Message
+  @model(subscriptions: null, timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: ID!
+  sender: MessageUser
+  senderID: ID
+  participantProfilePictureURLs: [ProfilePictureURLs]
+  content: String
+  mentions: [Mention]
+  url: MessageURL
+  senderProfilePictureURL: String
+  senderProfilePictureKey: String
+  senderFirstName: String
+  senderLastName: String
+  senderUsername: String
+  readUserIDs: [ID]
+  reactions: Reaction
+  reactionsCount: Int
+  inReplyToItem: InReplyToItem
+  channelID: String!
+    @index(
+      name: "byMessageChannelID"
+      queryField: "messagesByChannelID"
+      sortKeyFields: ["createdAt"]
+    )
+  createdAt: Int
+  updatedAt: Int
+}

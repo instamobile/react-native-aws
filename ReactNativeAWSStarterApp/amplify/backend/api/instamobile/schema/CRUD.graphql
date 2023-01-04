@@ -1,0 +1,133 @@
+type Query {
+  fetchProfile(viewerID: String!, profileID: String!): FetchProfileResponse
+    @function(name: "instamobileFunction-${env}")
+  fetchOtherUserFriendships(
+    viewerID: String!
+    userID: String!
+    type: String!
+    limit: String
+    nextToken: String
+  ): OtherUserFriendshipsResponse @function(name: "instamobileFunction-${env}")
+  onSearchUsers(
+    userID: String!
+    keyword: String!
+    nextToken: String
+    limit: Int
+  ): SearchResponse @function(name: "instamobileFunction-${env}")
+  fetchDiscoverFeedPosts(
+    userID: String!
+    nextToken: String
+    limit: Int
+  ): DiscoverFeedPostsResponse @function(name: "instamobileFunction-${env}")
+  fetchHashtagFeedPosts(
+    userID: String!
+    hashtag: String!
+    nextToken: String
+    limit: Int
+  ): HashtagFeedPostsResponse @function(name: "instamobileFunction-${env}")
+}
+
+type OtherUserFriendshipsResponse {
+  friendships: [Friendship]
+  success: Boolean
+}
+
+type ProfileData {
+  user: User
+  success: Boolean
+  friends: [User]
+  moreFriendsAvailable: Boolean
+  actionButtonType: String
+}
+
+type FetchProfileResponse {
+  profileData: ProfileData
+  success: Boolean
+}
+
+type SearchResponse {
+  items: [User]
+  nextToken: String
+}
+
+type DiscoverFeedPostsResponse {
+  items: [Post]
+  success: Boolean
+  nextToken: String
+}
+
+type HashtagFeedPostsResponse {
+  items: [EntityPostFeed]
+  success: Boolean
+  nextToken: String
+}
+
+type Subscription {
+  onUserChannelFeedUpdate(userID: ID!): ChannelFeed
+    @aws_subscribe(mutations: ["createChannelFeed", "updateChannelFeed"])
+  onSingleChannelUpdate(channelID: ID!): Channel
+    @aws_subscribe(mutations: ["createChannel", "updateChannel"])
+  onChannelMessageUpdate(channelID: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+  onUserFriendshipUpdate(sourceUserID: ID!): Friendship
+    @aws_subscribe(mutations: ["createFriendship", "updateFriendship"])
+  onUserMutualFriendshipUpdate(sourceUserID: ID!): MutualFriendship
+    @aws_subscribe(
+      mutations: ["createMutualFriendship", "updateMutualFriendship"]
+    )
+  onUserReportUpdate(source: ID!): UserReport
+    @aws_subscribe(mutations: ["createUserReport", "updateUserReport"])
+  onDestUserStoryFeedUpdate(destUserID: ID!): StoryFeed
+    @aws_subscribe(mutations: ["createStoryFeed", "updateStoryFeed"])
+  onAuthorPostFeedUpdate(authorID: ID!): PostFeed
+    @aws_subscribe(mutations: ["createPostFeed", "updatePostFeed"])
+  onDestUserPostFeedUpdate(destUserID: ID!): PostFeed
+    @aws_subscribe(mutations: ["createPostFeed", "updatePostFeed"])
+  onPostCommentsUpdate(postID: ID!): Comment
+    @aws_subscribe(mutations: ["createComment", "updateComment"])
+  onEntityPostFeedUpdate(hashtag: String!): EntityPostFeed
+    @aws_subscribe(mutations: ["createEntityPostFeed", "updateEntityPostFeed"])
+  onSinglePostUpdate(id: String!): Post
+    @aws_subscribe(mutations: ["createPost", "updatePost"])
+}
+
+type Mutation {
+  addFriendship(sourceUserID: String, destUserID: String): String
+    @function(name: "instamobileFunction-${env}")
+  unfriend(sourceUserID: String, destUserID: String): String
+    @function(name: "instamobileFunction-${env}")
+  unfollow(sourceUserID: String, destUserID: String): String
+    @function(name: "instamobileFunction-${env}")
+  onMessageCreated(messageID: String, channelID: String): String
+    @function(name: "instamobileFunction-${env}")
+  onChannelCreated(channelID: String): Channel
+    @function(name: "instamobileFunction-${env}")
+  markAsRead(
+    channelID: String
+    userID: String
+    messageID: String
+    readUserIDs: [String]
+  ): String @function(name: "instamobileFunction-${env}")
+  deleteMessageAndUpdateChannel(channelID: String, messageID: String): String
+    @function(name: "instamobileFunction-${env}")
+  leaveGroup(channelID: String, userID: String, content: String): String
+    @function(name: "instamobileFunction-${env}")
+  onGroupUpdate(channelID: String, userID: String, content: String): String
+    @function(name: "instamobileFunction-${env}")
+  deleteGroup(channelID: String): String
+    @function(name: "instamobileFunction-${env}")
+  onMarkedAbuse(sourceUserID: String, destUserID: String): String
+    @function(name: "instamobileFunction-${env}")
+  unblockUser(sourceUserID: String!, destUserID: String!): String
+    @function(name: "instamobileFunction-${env}")
+  addChatReaction(
+    messageID: String!
+    authorID: String!
+    reaction: String!
+    channelID: String!
+  ): String @function(name: "instamobileFunction-${env}")
+  addComment(postID: String!, authorID: String!, commentText: String!): String
+    @function(name: "instamobileFunction-${env}")
+  addReaction(postID: String!, authorID: String!, reaction: String!): String
+    @function(name: "instamobileFunction-${env}")
+}

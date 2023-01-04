@@ -1,0 +1,39 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-instamobile-dev-95318-authRole",
+      "UnauthRoleArn": "arn:aws:iam::968994790845:role/amplify-instamobile-dev-95318-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::968994790845:role/amplify-instamobile-dev-95318-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-instamobile-dev-95318-deployment",
+      "UnauthRoleName": "amplify-instamobile-dev-95318-unauthRole",
+      "StackName": "amplify-instamobile-dev-95318",
+      "StackId": "arn:aws:cloudformation:us-east-1:968994790845:stack/amplify-instamobile-dev-95318/60fd4d90-9f86-11ec-b47f-0ace8056a7df",
+      "AmplifyAppId": "d1ajp5g70uc0bw"
+    },
+    "categories": {
+      "auth": {
+        "instamobile0f4708fd": {},
+        "true": {}
+      },
+      "function": {
+        "instamobileFunction": {
+          "deploymentBucketName": "amplify-instamobile-dev-95318-deployment",
+          "s3Key": "amplify-builds/instamobileFunction-322f5362304468585751-build.zip",
+          "cognitoClientId": "7dlph62rq2g85abna5coheobh5",
+          "cognitoUserPoolId": "us-east-1_nyAQZtzcp",
+          "adminUserUsername": "tuser4142@gmail.com",
+          "adminUserPassword": "testuser4142"
+        },
+        "instamobileTrigger": {
+          "cognitoClientId": "7dlph62rq2g85abna5coheobh5",
+          "cognitoUserPoolId": "us-east-1_nyAQZtzcp",
+          "adminUserUsername": "tuser4142@gmail.com",
+          "adminUserPassword": "testuser4142",
+          "deploymentBucketName": "amplify-instamobile-dev-95318-deployment",
+          "s3Key": "amplify-builds/instamobileTrigger-7955436a4c794f37466c-build.zip"
+        }
+      }
+    }
+  }
+}

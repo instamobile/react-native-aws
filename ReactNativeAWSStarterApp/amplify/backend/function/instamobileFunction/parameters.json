@@ -1,0 +1,6 @@
+{
+  "apiGraphQLAPIIdOutput": {
+    "Fn::GetAtt": ["apiinstamobile", "Outputs.GraphQLAPIIdOutput"]
+  }
+}
+

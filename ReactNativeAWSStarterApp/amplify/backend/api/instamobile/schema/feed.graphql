@@ -1,0 +1,147 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+#Social Network model
+
+type PostMedia {
+  url: String
+  thumbnailURL: String
+  thumbnailKey: String
+  mime: String
+  urlKey: String
+}
+
+type Post
+  @model(timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: ID!
+  createdAt: Int
+  updatedAt: Int
+  authorID: ID!
+    @index(
+      name: "postsByUser"
+      queryField: "getPostsbyUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  author: User @belongsTo(fields: ["authorID"])
+  postText: String
+  commentCount: Int
+  location: String
+  postMedia: [PostMedia]
+  mentions: [Mention]
+  hashtags: [String]
+  reactions: Reaction
+  reactionsCount: Int
+  comments: [Comment] @hasMany(indexName: "commentsByPost", fields: ["id"])
+  postFeed: [PostFeed] @hasMany(indexName: "postFeedByPost", fields: ["id"])
+  entityPostFeed: [EntityPostFeed]
+    @hasMany(indexName: "entityPostFeedByPost", fields: ["id"])
+}
+
+type PostFeed
+  @model(timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: ID!
+  authorID: ID!
+    @index(
+      name: "postFeedByAuthor"
+      queryField: "getPostFeedByAuthor"
+      sortKeyFields: ["updatedAt"]
+    )
+  author: User @belongsTo(fields: ["authorID"])
+  destUserID: ID!
+    @index(name: "postFeedForDestUser", queryField: "getPostFeedForDestUser")
+  postID: ID! @index(name: "postFeedByPost", queryField: "getPostFeedForPost")
+  post: Post @belongsTo(fields: ["postID"])
+  createdAt: Int
+  updatedAt: Int
+}
+
+type EntityPostFeed
+  @model(timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: ID!
+  postID: ID! @index(name: "entityPostFeedByPost")
+  post: Post @belongsTo(fields: ["postID"])
+  hashtag: String!
+    @index(
+      name: "entityPostFeedByhashtag"
+      queryField: "getEntityPostFeedByhashtag"
+    )
+  createdAt: Int
+  updatedAt: Int
+}
+
+type Comment
+  @model(timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: ID!
+  createdAt: Int
+  updatedAt: Int
+  authorID: ID!
+    @index(
+      name: "commentsByUser"
+      queryField: "getCommentsByUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  author: User @belongsTo(fields: ["authorID"])
+  commentText: String
+  postID: ID
+    @index(
+      name: "commentsByPost"
+      queryField: "getPostComments"
+      sortKeyFields: ["updatedAt"]
+    )
+}
+
+type Story
+  @model(timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: ID!
+  createdAt: Int
+  updatedAt: Int
+  authorID: ID!
+    @index(
+      name: "storiesByUser"
+      queryField: "getStoriesByUser"
+      sortKeyFields: ["updatedAt"]
+    )
+  author: User @belongsTo(fields: ["authorID"])
+  storyMediaURL: String
+  thumbnailURL: String
+  storyType: String
+  viewsCount: Int
+  reactionsCount: Int
+  storyFeed: [StoryFeed] @hasMany(indexName: "storyFeedByStory", fields: ["id"])
+}
+
+type StoryFeed
+  @model(timestamps: null)
+  @auth(
+    rules: [{ allow: private, operations: [create, delete, update, read] }]
+  ) {
+  id: ID!
+  authorID: ID!
+    @index(
+      name: "storyFeedByAuthor"
+      queryField: "getStoryFeedByAuthor"
+      sortKeyFields: ["updatedAt"]
+    )
+  author: User @belongsTo(fields: ["authorID"])
+  destUserID: ID!
+    @index(name: "storyFeedForDestUser", queryField: "getStoryFeedForDestUser")
+  storyID: ID! @index(name: "storyFeedByStory")
+  story: Story @belongsTo(fields: ["storyID"])
+  createdAt: Int
+  updatedAt: Int
+}

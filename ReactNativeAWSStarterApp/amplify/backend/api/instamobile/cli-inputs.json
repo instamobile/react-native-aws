@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "instamobile",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/sholaEmmanuel/Documents/work/instamobile/Instamobile/amplify/backend/api/instamobile/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authinstamobile0f4708fd"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": []
+  }
+}
